@@ -368,3 +368,41 @@ else:
   ax.legend()
   ax.set_title('Comparison of player team Points vs solo Points')
   fig.savefig('team_vs_solo.pdf', bbox_inches='tight')
+
+  ## Plot number of games played vs solo ELO
+  ids = player_1_elo_map.keys()
+  elos = [player_1_elo_map[id] for id in ids]
+  wins = [player_1_alltime_wins_map[id] for id in ids]
+  loss = [player_1_alltime_loss_map[id] for id in ids]
+  games = [w + l for (w, l) in zip(wins, loss)]
+    
+  fig, ax = plt.subplots()
+  ax.plot(elos, games, '+', label = 'Player data', markersize = 0.1)
+  ax.set_xlabel('1v1 ELO')
+  ax.set_ylabel('Games played (alltime)')
+  # ax.set_ylim(top = 2000)
+  ax.set_yscale('log')
+
+  ax.grid(which = 'both', axis = 'both')
+
+  ax.legend()
+  ax.set_title('Comparison of games played by player 1v1 ELO')
+  fig.savefig('games_vs_elo.pdf', bbox_inches='tight')
+  
+  ## Plot number of win% vs solo ELO
+  ids = player_1_elo_map.keys()
+  elos = [player_1_elo_map[id] for id in ids]
+  wins = [player_1_alltime_wins_map[id] for id in ids]
+  loss = [player_1_alltime_loss_map[id] for id in ids]
+  perc = [w/(w + l) for (w, l) in zip(wins, loss)]
+    
+  fig, ax = plt.subplots()
+  ax.plot(elos, perc, '+', label = 'Player data', markersize = 0.1)
+  ax.set_xlabel('1v1 ELO')
+  ax.set_ylabel('Win percentage (alltime)')
+
+  ax.grid(which = 'both', axis = 'both')
+
+  ax.legend()
+  ax.set_title('Comparison of win percentage by player 1v1 ELO')
+  fig.savefig('win_perc_vs_elo.pdf', bbox_inches='tight')
