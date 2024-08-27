@@ -406,3 +406,23 @@ else:
   ax.legend()
   ax.set_title('Comparison of win percentage by player 1v1 ELO')
   fig.savefig('win_perc_vs_elo.pdf', bbox_inches='tight')
+
+  # Plot win% vs number of games
+  ids = player_1_elo_map.keys()
+  elos = [player_1_elo_map[id] for id in ids]
+  wins = [player_1_alltime_wins_map[id] for id in ids]
+  loss = [player_1_alltime_loss_map[id] for id in ids]
+  perc = [w/(w + l) for (w, l) in zip(wins, loss)]
+  games = [(w + l) for (w, l) in zip(wins, loss)]
+  
+  fig, ax = plt.subplots()
+  ax.plot(games, perc, '+', label = 'Player data', markersize = 0.1)
+  ax.set_xlabel('Games played (alltime)')
+  ax.set_ylabel('Win percentage (alltime)')
+  ax.set_xscale('log')
+
+  ax.grid(which = 'both', axis = 'both')
+
+  ax.legend()
+  ax.set_title('Comparison of win percentage by number of games played')
+  fig.savefig('win_perc_vs_games.pdf', bbox_inches='tight')
